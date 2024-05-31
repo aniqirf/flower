@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Night</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        .falling-star {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fall 5s linear infinite, blink 2s infinite;
+        }
+
+        .sun {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #ffd700, #ff4500); 
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: sunAnimation 5s linear infinite;
+            box-shadow: 0 0 50px rgba(255, 255, 0, 0.5);
+        }
+
+        .earth-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            transform: translate(-50%, -50%);
+            animation: rotateEarth 30s linear infinite;
+        }
+
+        .earth {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/1200px-Earth_Western_Hemisphere_transparent_background.png');
+            background-size: 100%;
+            border-radius: 50%;
+        }
+
+        .moon-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            transform-origin: 0% 50%; 
+            animation: rotateMoon 20s linear infinite;
+        }
+
+        .moon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background:url("https://www.solarsystemscope.com/spacepedia/images/handbook/renders/moon.png");
+            background-size: 100%;
+            background-color: #aaa; 
+            border-radius: 50%;
+            box-shadow:
+                0 0 20px 3px rgba(255, 255, 255, 0.5),
+                0 0 30px 5px rgba(255, 255, 255, 0.4);
+            transform-origin: 50% 50%;
+        }
+
+        .moon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px dashed rgba(255, 255, 255, 0.5); 
+            border-radius: 50%;
+            animation: moonOrbitTail 5s linear infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+        
+
+        @keyframes fall {
+            from {
+                transform: translate(0, -10vh);
+                opacity: 1;
+            }
+            to {
+                transform: translate(100vw, 100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sunAnimation {
+            0%, 100% {
+                box-shadow: 0 0 50px rgba(255, 179, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 800px rgba(255, 69, 0, 0.5);
+            }
+        }
+
+        @keyframes rotateEarth {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) translateX(350px);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) translateX(350px);
+            }
+        }
+
+        @keyframes rotateMoon {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) translateX(100px);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) translateX(100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Create multiple stars with random positions and timings -->
+    <script>
+        const numberOfStars = 450;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            createStar();
+        }
+
+        // Create a few falling stars
+        createFallingStar();
+        createFallingStar();
+        createFallingStar();
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${getRandomInt(100)}vw`;
+            star.style.top = `${getRandomInt(100)}vh`;
+            star.style.animationDuration = `${getRandomInt(4) + 2}s`; 
+            document.body.appendChild(star);
+        }
+
+        function createFallingStar() {
+            const star = document.createElement('div');
+            star.className = 'falling-star';
+            star.style.left = `${getRandomInt(100)}vw`;
+            star.style.animationDuration = `${getRandomInt(4) + 2}s`; 
+            document.body.appendChild(star);
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+    </script>
+
+    <div class="sun">
+        <div class="earth-container">
+            <div class="earth">
+                <div class="moon-container">
+                    <div class="moon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
